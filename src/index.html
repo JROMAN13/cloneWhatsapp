@@ -35,24 +35,24 @@
             Sign Up
             <span class="underline"></span>
           </button>
-          <form class="form form-signup">
+          <form class="form form-signup" id="form">
             <fieldset>
               <legend>Please enter the following information for sign up.</legend>
               <div class="input-block">
                 <label for="signup-email">Cell phone</label>
-                <input id="signup-email" type="number" required />
+                <input id="signup-email" type="number" name="celular" required/>
               </div>
               <div class="input-block">
                 <label for="signup-password">Password</label>
-                <input id="signup-password" type="password" required />
+                <input id="signup-password" name="contraseña" type="password" required />
               </div>
               <div class="input-block">
                 <label for="signup-password-confirm">Name</label>
-                <input id="signup-password-confirm" type="text" required />
+                <input id="signup-password-confirm" name="nombre" type="text" required />
               </div>
               <div class="input-block">
                 <label for="signup-password-confirm">Description</label>
-                <input id="signup-password-confirm" type="text" required />
+                <input id="signup-password-confirm" name="description" type="text" required />
               </div>
 
             </fieldset>

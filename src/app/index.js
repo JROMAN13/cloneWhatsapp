@@ -13,6 +13,7 @@ let transactions = [];
 const logoImage = document.getElementById("logo");
 const transactionsContainer = document.getElementById("transactions");
 const form = document.getElementById("form");
+console.log(form);
 
 const switchers = [...document.querySelectorAll('.switcher')]
 
@@ -23,20 +24,30 @@ switchers.forEach(item => {
 	})
 })
 
-logoImage.setAttribute("src", image);
+// logoImage.setAttribute("src", image);
 
 //Queremos listar los movimientos o trasacciones
 document.addEventListener("DOMContentLoaded", async () => {
   transactions = await getTransactions();
-  printTransactions(transactionsContainer, transactions);
+  // printTransactions(transactionsContainer, transactions);
 });
+
+
+/*--------- FUNCION REGISTRAR -------- */
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const newTransaction = getDataForm(form);
+  // const date = new Date().toLocaleDateString("en-US");
+  const date = new Date();
+  console.log(date);
+  newTransaction.fechaUltimaS = date;
+  newTransaction.enLinea = false;
+  newTransaction.imagen= "https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg"
+  console.log(newTransaction);
   const responseTransaction = await createTransaction(newTransaction);
   transactions.push(responseTransaction.data);
-  printTransactions(transactionsContainer, transactions);
+  // printTransactions(transactionsContainer, transactions);
   form.reset();
 });
 
