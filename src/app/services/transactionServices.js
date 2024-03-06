@@ -1,5 +1,5 @@
 import axios from "axios";
-import endpoints from "./data";
+import { endpoints } from "./data";
 
 export const getTransactions = async () => {
   try {

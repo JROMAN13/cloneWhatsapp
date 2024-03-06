@@ -15,16 +15,16 @@
             Login
             <span class="underline"></span>
           </button>
-          <form class="form form-login">
+          <form class="form form-login" id="formLogin">
             <fieldset>
               <legend>Please enter your registration details</legend>
               <div class="input-block">
                 <label for="login-email">Cell phone</label>
-                <input id="login-email" type="number" required />
+                <input id="login-email" type="number" name="celular" required />
               </div>
               <div class="input-block">
                 <label for="login-password">Password</label>
-                <input id="login-password" type="password" required />
+                <input id="login-password" type="password" name="pass" required />
               </div>
             </fieldset>
             <button type="submit" class="btn-login">Login</button>
@@ -54,7 +54,6 @@
                 <label for="signup-password-confirm">Description</label>
                 <input id="signup-password-confirm" name="description" type="text" required />
               </div>
-
             </fieldset>
             <button type="submit" class="btn-signup">Continue</button>
           </form>
