@@ -10,7 +10,7 @@ module.exports = {
     home: "./src/app/scripts/home.js",
   },
   output: {
-    path: path.resolve(__dirname, "build"),
+    path: path.resolve(__dirname, "dist"),
     filename: "[name].js",
     },
   devServer: {
@@ -22,10 +22,10 @@ module.exports = {
         test: /\.js$/i,
         loader: "babel-loader",
       },
-      {
-        test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
+      // {
+      //   test: /\.css$/i,
+      //   use: [MiniCssExtractPlugin.loader, "css-loader"],
+      // },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
@@ -39,9 +39,13 @@ module.exports = {
         ],
       },
       {
-        test: /\.s[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        test: /\.s[ac]ss$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
+      // {
+      //   test: /\.s[ac]ss$/i,
+      //   use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      // },
       {
         test: /\.html$/i,
         use: [
