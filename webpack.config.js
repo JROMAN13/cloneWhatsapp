@@ -1,17 +1,18 @@
 const path = require("path");
-const HTMLWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //const sassLoader = require("sass-loader");
 
 module.exports = {
   mode: "none",
   entry: {
-    app: ["@babel/polyfill", "./src/app/index.js"],
+    login: "./src/app/scripts/index.js",
+    home: "./src/app/scripts/home.js",
   },
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "js/app.bundle.js",
-  },
+    filename: "[name].js",
+    },
   devServer: {
     port: 5050,
   },
@@ -52,9 +53,9 @@ module.exports = {
     ],
   },
   plugins: [
-    new HTMLWebpackPlugin({
-      hash: true,
+    new HtmlWebpackPlugin({
       template: "./src/index.html",
+      filename: "index.html",
       minify: {
         collapseWhitespace: true,
         removeComments: true,
@@ -63,9 +64,21 @@ module.exports = {
         removeStyleLinkTypeAttributes: true,
         useShortDoctype: true,
       },
+      chunks: ["login"],
     }),
-    new MiniCssExtractPlugin({
-      filename: "css/app.bundle.css",
+
+    new HtmlWebpackPlugin({
+      template: "./src/pages/home.html",
+      filename: "pages/home.html",
+      minify: {
+        collapseWhitespace: true,
+        removeComments: true,
+        removeRedundantAttributes: true,
+        removeScriptTypeAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        useShortDoctype: true,
+      },
+      chunks: ["home"],
     }),
   ],
 };

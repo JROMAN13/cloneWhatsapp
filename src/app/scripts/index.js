@@ -1,14 +1,14 @@
-import "./styles/style.scss";
+import "../styles/style.scss";
 // import image from "./assets/images/logo.svg";
 import {
   createTransaction,
   deleteATransaction,
   getTransactions,
-} from "./services/transactionServices";
-import printTransactions from "./modules/printTransactions";
-import { getDataForm, validateDataForm } from "./modules/getDataForm";
-import { getUser } from "./services/userServices";
-import { endpoints } from "./services/data";
+} from "../services/transactionServices";
+import printTransactions from "../modules/printTransactions";
+import { getDataForm, validateDataForm } from "../modules/getDataForm";
+import { getUser } from "../services/userServices";
+import { endpoints } from "../services/data";
 import Swal from "sweetalert2";
 
 
@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   transactions = await getTransactions();
   // printTransactions(transactionsContainer, transactions);
 });
-
 
 /*--------- FUNCION REGISTRAR -------- */
 
@@ -88,6 +87,7 @@ const login = async (userData) => {
       timer: 1500
     });
     form.reset();
+    location.href("../pages/home.html");
   } else {
     Swal.fire({
       icon: "error",
