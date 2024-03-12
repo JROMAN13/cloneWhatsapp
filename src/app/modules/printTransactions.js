@@ -21,3 +21,10 @@ const printTransactions = (container, transactionList) => {
 };
 
 export default printTransactions;
+
+
+// const printMessage =(messagesStarted,messageReceived) =>{
+//   container.innerHTML = "";
+//   transactionList.forEach((element) => {
+//     container.innerHTML += `
+// }
