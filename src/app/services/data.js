@@ -6,6 +6,9 @@ export const endpoints = {
   getAnUser: (celular, contraseña) =>
     `${URL_BASE}usuarios?celular=${celular}&contraseña=${contraseña}`,
   messages: `${URL_BASE}mensajes`,
-  messagesStarted: (senderUser) =>`${URL_BASE}mensajes?senderUser=${senderUser}`,
-  messageReceived: (recipientUser)=>`${URL_BASE}mensajes?recipientUser=${recipientUser}`,
+  messagesStarted: (senderUser) =>
+    `${URL_BASE}mensajes?senderUser=${senderUser}`,
+  messageReceived: (recipientUser) =>
+    `${URL_BASE}mensajes?recipientUser=${recipientUser}`,
+  //message: (id)=>`${URL_BASE}mensajes?id=${id}`,
 };
