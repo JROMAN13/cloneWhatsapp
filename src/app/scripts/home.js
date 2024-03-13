@@ -1,11 +1,20 @@
 import "../styles/home.scss";
-import { getUserConversations, getchats } from "../services/userServices";
-import { printMensajes } from "../modules/printHome";
+import { getAnConversation } from "../services/userServices";
+import { listarContactos } from "../modules/printHome";
 
-//abrir el chat
+const idUserLogged = "1";
+const contactContainer = document.querySelector("#chats");
 
-const data = async () => {
-  const data = await getUserConversations(1);
-  printMensajes(data);
-};
-data();
+document.addEventListener("DOMContentLoaded", function () {
+  // const idUserLogged = "idUserLogged";
+  // const contactsContainer = document.getElementById("contactsContainer");
+  listarContactos(idUserLogged, contactContainer);
+});
+
+document.addEventListener("click", async function (event) {
+  if (event.target.getAttribute("data-click")) {
+    const idContacto = event.target.getAttribute("data-click");
+    const conversacion = await getAnConversation(idUserLogged, idContacto);
+    console.log(conversacion);
+  }
+});
