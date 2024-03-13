@@ -1,5 +1,6 @@
 import axios from "axios";
 import { endpoints } from "./data";
+
 export const getUser = async (url) => {
   try {
     const { data } = await axios.get(url);
@@ -30,5 +31,18 @@ export const getchats = async () => {
   } catch (error) {
     console.error(error);
     return null;
+  }
+};
+
+export const getContacts = async (idUserLogged) => {
+  try {
+    const { data } = await axios.get(endpoints.transactions);
+    console.log(data);
+    const contacts = data.filter((user) => user.id !== idUserLogged);
+    console.log(contacts);
+    return contacts;
+  } catch (error) {
+    console.log(error);
+    return [];
   }
 };

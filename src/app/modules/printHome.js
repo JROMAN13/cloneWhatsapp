@@ -1,4 +1,8 @@
-import { getchats } from "../services/userServices";
+import { getchats, getContacts } from "../services/userServices";
+
+/* función listar chats*/
+
+import { getchats, getContacts } from "../services/userServices";
 
 /* función listar chats*/
 export async function abrirChat() {
@@ -64,3 +68,37 @@ export function MostrarChat(dataInfo) {
     });
   });
 }
+//funcion listarUsers, hacer petición get
+
+export const listarContactos = async (idUserLogged, contactsContainer) => {
+  try {
+    contactsContainer.innerHTML = "";
+    const contactos = await getContacts(idUserLogged);
+    console.log(contactos);
+
+    contactos.forEach((contacto) => {
+      contactsContainer.innerHTML += `<div class="chat-box">
+      <figure class="chat-box__img-box">
+       <img
+         class="chat-box__img-cover"
+         src="${contacto.imagen}"
+         alt="User profile picture"
+       />
+     </figure>
+      <div class="chat-box__chat-details">
+       <div class="chat-box__text-head">
+         <h4>${contacto.nombre}</h4>
+         <p class="chat-box__time chat-box__time--unread">${contacto.fechaUltimaS}</p>
+       </div>
+       <div class="chat-box__text-sms">
+         <p>hola</p>
+         <b>1</b>
+       </div>
+     </div>
+   </div>  
+      `;
+    });
+  } catch (error) {
+    contactsContainer.innerHTML = "Ocurrió un error";
+  }
+};
