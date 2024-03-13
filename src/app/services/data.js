@@ -10,5 +10,7 @@ export const endpoints = {
     `${URL_BASE}mensajes?senderUser=${senderUser}`,
   messageReceived: (recipientUser) =>
     `${URL_BASE}mensajes?recipientUser=${recipientUser}`,
+  getAConversation: (idUser1, idUser2) =>
+    `${URL_BASE}mensajes?senderUser=${idUser1}&recipientUser=${idUser2}`,
   //message: (id)=>`${URL_BASE}mensajes?id=${id}`,
 };
