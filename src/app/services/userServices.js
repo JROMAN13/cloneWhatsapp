@@ -11,6 +11,16 @@ export const getUser = async (url) => {
   }
 };
 
+export const getATransaction = async (id) => {
+  try {
+    const { data } = await axios.get(endpoints.transaction(id));
+    return data;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 export const getUserConversations = async (idUser) => {
   try {
     const started = await axios.get(endpoints.messagesStarted(idUser));
