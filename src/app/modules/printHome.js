@@ -90,21 +90,6 @@ export const mostrarChat = (container, chatsList) => {
   });
 };
 
-// export const mostrarChat = (container, chatsList) => {
-//   container.innerHTML = "";
-//   chatsList.forEach((element) => {
-//     container.innerHTML += `
-//     <div class="chat-container__sms-box .chat-container__my-sms">
-//       <p>
-//         ${element.mensaje}<br /><span>${element.hora}</span>
-//       </p>
-//     </div>
-//     <div class="chat-container__sms-box chat-container__friend-sms">
-//         ${element.mensaje}<br /><span>${element.hora}</span>
-//     </div>
-//         `;
-//   });
-// };
 
 // export function MostrarChat(dataInfo) {
 //   const chatContainer = document.querySelector(".chat-container");
