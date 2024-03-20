@@ -24,8 +24,7 @@ export const getATransaction = async (id) => {
 export const getUserConversations = async (idUser) => {
   try {
     const started = await axios.get(endpoints.messagesStarted(idUser));
-    const received = await axios.get(endpoints.messageReceived(idUser));
-    console.log("funciona", received);
+    const received = await axios.get(endpoints.messageReceived(idUser));    
     return [...started.data, ...received.data];
     // return [...received.data];
   } catch (error) {
@@ -46,10 +45,8 @@ export const getchats = async () => {
 
 export const getContacts = async (idUserLogged) => {
   try {
-    const { data } = await axios.get(endpoints.transactions);
-    console.log(data);
-    const contacts = data.filter((user) => user.id !== idUserLogged);
-    console.log(contacts);
+    const { data } = await axios.get(endpoints.transactions);    
+    const contacts = data.filter((user) => user.id !== idUserLogged);    
     return contacts;
   } catch (error) {
     console.log(error);
@@ -97,7 +94,27 @@ export const startAConversation = async ({ senderUser, receptorUser, message }) 
   }
 };
 
-export const sendMessage = async ({ idConversation, messagesArrays, sender, newMenssage }) => {
+// export const sendMessage = async ({ idConversation, messagesArrays, sender, newMenssage }) => {
+//   try {
+//     const url = endpoints.aConversation(idConversation);
+//     const mensaje = {
+//       sendBy: sender,
+//       fecha: new Date(),
+//       hora: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+//       visto: false,
+//       mensaje: newMenssage,
+//     };
+//     const response = await axios.patch(url, {
+//       conversaciones: [...messagesArrays, mensaje],
+//     });
+//     return response;
+//   } catch (error) {
+//     console.error(error);
+//     return null;
+//   }
+// };
+
+export const sendMessage = async ({ idConversation, messagesArrays, sender, newMessage }) => {
   try {
     const url = endpoints.aConversation(idConversation);
     const mensaje = {
@@ -105,7 +122,7 @@ export const sendMessage = async ({ idConversation, messagesArrays, sender, newM
       fecha: new Date(),
       hora: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       visto: false,
-      mensaje: newMenssage,
+      mensaje: newMessage,
     };
     const response = await axios.patch(url, {
       conversaciones: [...messagesArrays, mensaje],
@@ -121,14 +138,20 @@ export const getConversation = async (conversationId) => {
   try {
     // Realiza una solicitud GET para obtener todos los mensajes
     const response = await axios.get(endpoints.messages);
-    const mensajes = response.data.mensajes;
+    console.log(response.data); // Verifica la estructura de la respuesta
+    
+    // Obtén los mensajes de la respuesta
+    const mensajes = response.data; // Corregir aquí
 
-    // Itera sobre los mensajes para encontrar la conversación con el ID deseado
-    for (const mensaje of mensajes) {
-      // Verifica si la conversación actual tiene el ID deseado
-      if (mensaje.id === conversationId) {
-        // Devuelve la conversación encontrada
-        return mensaje.conversaciones;
+    // Verifica si existe la propiedad mensajes en la respuesta
+    if (mensajes && Array.isArray(mensajes)) {
+      // Itera sobre los mensajes para encontrar la conversación con el ID deseado
+      for (const mensaje of mensajes) {
+        // Verifica si la conversación actual tiene el ID deseado
+        if (mensaje.id === conversationId && mensaje.conversaciones) {
+          // Devuelve la conversación encontrada
+          return mensaje.conversaciones;
+        }
       }
     }
 
@@ -139,3 +162,9 @@ export const getConversation = async (conversationId) => {
     return null;
   }
 };
+
+
+
+
+
+

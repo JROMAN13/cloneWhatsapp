@@ -122,8 +122,7 @@ export const mostrarChat = (container, chatsList) => {
 export const listarContactos = async (idUserLogged, contactsContainer) => {
   try {
     contactsContainer.innerHTML = "";
-    const contactos = await getContacts(idUserLogged);
-    console.log(contactos);
+    const contactos = await getContacts(idUserLogged);   
 
     contactos.forEach((contacto) => {
       contactsContainer.innerHTML += `
