@@ -89,6 +89,7 @@ const login = async (userData) => {
       showConfirmButton: false,
       timer: 1500,
     });
+    localStorage.setItem("userId", JSON.stringify(userLogged.id));
     form.reset();
     window.location.assign("../pages/home.html");
   } else {

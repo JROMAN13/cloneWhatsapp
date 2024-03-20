@@ -1,25 +1,27 @@
 import { getchats, getContacts } from "../services/userServices";
 
-export const mostrarChat = (container, chatsList) => {
-  
+export const mostrarChat = (container, chatsList, idUserLogged) => {
   container.innerHTML = "";
   chatsList.forEach((element) => {
-    const remitente = element.senderUser === 1 ? "my-sms" : "friend-sms";
-    element.conversaciones.forEach((mensaje)  => {
-      
-      const smsBox = document.createElement("div");
-      smsBox.classList.add(
-        "chat-container__sms-box",
-        `chat-container__${remitente}`
-      );
+    const remitente = element.sendBy == idUserLogged ? "my-sms" : "friend-sms";
+    const smsBox = document.createElement("div");
+    smsBox.classList.add("chat-container__sms-box", `chat-container__${remitente}`);
 
-      smsBox.innerHTML = `
-          <p>${mensaje.mensaje}<br /><span>${mensaje.hora}</span></p>
+    smsBox.innerHTML = `
+          <p>${element.mensaje}<br /><span>${element.hora}</span></p>
         `;
 
-        container.appendChild(smsBox);
-      
-    });
+    container.appendChild(smsBox);
+    // element.forEach((mensaje) => {
+    //   const smsBox = document.createElement("div");
+    //   smsBox.classList.add("chat-container__sms-box", `chat-container__${remitente}`);
+
+    //   smsBox.innerHTML = `
+    //       <p>${mensaje.mensaje}<br /><span>${mensaje.hora}</span></p>
+    //     `;
+
+    //   container.appendChild(smsBox);
+    // });
   });
 };
 
