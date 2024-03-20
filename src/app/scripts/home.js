@@ -104,6 +104,8 @@ inputElement.addEventListener("keydown", async function (event) {
         sender: senderUser,
         newMenssage: message,
       });
+      chats = await getchats();
+      mostrarChat(chatsContainer, chats, idUserLogged);
       //await listarContactos(1, contactContainer);
       inputElement.value = "";
     }
