@@ -24,7 +24,7 @@ export const getATransaction = async (id) => {
 export const getUserConversations = async (idUser) => {
   try {
     const started = await axios.get(endpoints.messagesStarted(idUser));
-    const received = await axios.get(endpoints.messageReceived(idUser));    
+    const received = await axios.get(endpoints.messageReceived(idUser));
     return [...started.data, ...received.data];
     // return [...received.data];
   } catch (error) {
@@ -45,8 +45,8 @@ export const getchats = async () => {
 
 export const getContacts = async (idUserLogged) => {
   try {
-    const { data } = await axios.get(endpoints.transactions);    
-    const contacts = data.filter((user) => user.id !== idUserLogged);    
+    const { data } = await axios.get(endpoints.transactions);
+    const contacts = data.filter((user) => user.id !== idUserLogged);
     return contacts;
   } catch (error) {
     console.log(error);
@@ -56,14 +56,10 @@ export const getContacts = async (idUserLogged) => {
 
 export const getAnConversation = async (idUserLogged, idContact) => {
   try {
-    const conversacionIniciada = await axios.get(
-      endpoints.getAConversation(idUserLogged, idContact)
-    );
+    const conversacionIniciada = await axios.get(endpoints.getAConversation(idUserLogged, idContact));
 
     if (conversacionIniciada.data.length <= 0) {
-      const conversacionRecibida = await axios.get(
-        endpoints.getAConversation(idContact, idUserLogged)
-      );
+      const conversacionRecibida = await axios.get(endpoints.getAConversation(idContact, idUserLogged));
       return conversacionRecibida.data[0];
     }
 
@@ -74,11 +70,7 @@ export const getAnConversation = async (idUserLogged, idContact) => {
   }
 };
 
-export const startAConversation = async ({
-  senderUser,
-  receptorUser,
-  message,
-}) => {
+export const startAConversation = async ({ senderUser, receptorUser, message }) => {
   try {
     const url = endpoints.mensajes;
     const newConversation = {
@@ -105,12 +97,7 @@ export const startAConversation = async ({
   }
 };
 
-export const sendMessage = async ({
-  idConversation,
-  messagesArrays,
-  sender,
-  newMenssage,
-}) => {
+export const sendMessage = async ({ idConversation, messagesArrays, sender, newMenssage }) => {
   try {
     const url = endpoints.aConversation(idConversation);
     const mensaje = {
@@ -121,7 +108,7 @@ export const sendMessage = async ({
         minute: "2-digit",
       }),
       visto: false,
-      mensaje: newMessage,
+      mensaje: newMenssage,
     };
     const response = await axios.patch(url, {
       conversaciones: [...messagesArrays, mensaje],
@@ -136,35 +123,23 @@ export const sendMessage = async ({
 
 export const getConversation = async (conversationId) => {
   try {
-    // Realiza una solicitud GET para obtener todos los mensajes
     const response = await axios.get(endpoints.messages);
-    console.log(response.data); // Verifica la estructura de la respuesta
-    
+
     // Obtén los mensajes de la respuesta
-    const mensajes = response.data; // Corregir aquí
+    const mensajes = response.data;
 
     // Verifica si existe la propiedad mensajes en la respuesta
     if (mensajes && Array.isArray(mensajes)) {
-      // Itera sobre los mensajes para encontrar la conversación con el ID deseado
       for (const mensaje of mensajes) {
-        // Verifica si la conversación actual tiene el ID deseado
         if (mensaje.id === conversationId && mensaje.conversaciones) {
-          // Devuelve la conversación encontrada
           return mensaje.conversaciones;
         }
       }
     }
 
-    // Si no se encontró la conversación, devuelve null
     return null;
   } catch (error) {
     console.error("Error al obtener la conversación:", error);
     return null;
   }
 };
-
-
-
-
-
-
