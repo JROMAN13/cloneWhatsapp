@@ -1,10 +1,11 @@
 import "../styles/home.scss";
-import { getAnConversation, startAConversation, sendMessage,getConversationById, getConversation, getchats, getContacts } from "../services/userServices";
-import { listarContactos, mostrarChat } from "../modules/printHome";
+import { getAnConversation, startAConversation, sendMessage,getConversationById, getContacts } from "../services/userServices";
+import { listarContactos, mostrarChat, printHeaderUser } from "../modules/printHome";
 
 const idUserLogged = JSON.parse(localStorage.getItem("userId")) || "1";
 const contactContainer = document.querySelector("#chats");
 const chatsContainer = document.querySelector(".chat-container");
+const headerUserContainer = document.querySelector("#headerUser");
 const inputElement = document.querySelector("#inputSendMessage");
 let conversacion;
 let idContacto;
@@ -18,12 +19,12 @@ document.addEventListener("click", async function (event) {
   if (event.target.getAttribute("data-click")) {
     idContacto = event.target.getAttribute("data-click");
     conversacion = await getAnConversation(idUserLogged, idContacto);
-    console.log(conversacion);
-    // chats = await getchats();
+    console.log(conversacion);    
     chats = conversacion?.conversaciones || [];
     console.log(chats);
-
+    const contactos= await getContacts();
     mostrarChat(chatsContainer, chats, idUserLogged);
+    printHeaderUser(headerUserContainer, contactos, idContacto);
   }
 });
 
@@ -35,8 +36,7 @@ inputElement.addEventListener("keydown", async function (event) {
     // Verifica si el mensaje no está vacío
     if (message !== "") {
       const senderUser = idUserLogged;
-      let idConversacion = conversacion?.id||null;
-      //const mesagges = await getAnConversation(1, 2);
+      let idConversacion = conversacion?.id||null;      
       const mesagges = conversacion?.conversaciones || [];
       console.log(message);
       if (idConversacion) {
@@ -45,15 +45,12 @@ inputElement.addEventListener("keydown", async function (event) {
           messagesArrays: mesagges,
           sender: senderUser,
           newMenssage: inputElement.value,
-        });        
-        //mesagges.push(response.data);
+        });   
+       
       } else {
         const response = await startAConversation({ senderUser: senderUser, receptorUser: idContacto, message: inputElement.value });
         conversacion = response.data;
-        idConversacion = conversacion.id
-        // console.log(conversacion);
-        // const chat = conversacion?.conversaciones||[]
-        // mesagges.push(...chat);
+        idConversacion = conversacion.id;        
       }
       conversacion = await getConversationById(idConversacion);
       chats = conversacion.conversaciones;

@@ -1,45 +1,26 @@
 import "../styles/style.scss";
-// import image from "./assets/images/logo.svg";
-import {
-  createTransaction,
-  deleteATransaction,
-  getTransactions,
-} from "../services/transactionServices";
+import { createTransaction, deleteATransaction, getTransactions } from "../services/transactionServices";
 import printTransactions from "../modules/printTransactions";
 import { getDataForm, validateDataForm } from "../modules/getDataForm";
 import { getUser } from "../services/userServices";
 import { endpoints } from "../services/data";
 import Swal from "sweetalert2";
 
-//Actualizar las imágenes en el atributo src de las etiquetas
 let transactions = [];
-const logoImage = document.getElementById("logo");
 const transactionsContainer = document.getElementById("transactions");
 const form = document.getElementById("form");
 const formLogin = document.getElementById("formLogin");
-console.log(formLogin);
 
+/*-----------------  ANIMACION LOGIN ----------------*/
 const switchers = [...document.querySelectorAll(".switcher")];
-
 switchers.forEach((item) => {
   item.addEventListener("click", function () {
-    switchers.forEach((item) =>
-      item.parentElement.classList.remove("is-active")
-    );
+    switchers.forEach((item) => item.parentElement.classList.remove("is-active"));
     this.parentElement.classList.add("is-active");
   });
 });
 
-// logoImage.setAttribute("src", image);
-
-//Queremos listar los movimientos o trasacciones
-document.addEventListener("DOMContentLoaded", async () => {
-  transactions = await getTransactions();
-  // printTransactions(transactionsContainer, transactions);
-});
-
 /*--------- FUNCION REGISTRAR -------- */
-
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const newTransaction = getDataForm(form);
@@ -49,18 +30,14 @@ form.addEventListener("submit", async (e) => {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text:
-        "El formulario tiene los siguientes datos incorrectos: \n" +
-        validation.toString(),
+      text: "El formulario tiene los siguientes datos incorrectos: \n" + validation.toString(),
     });
-  } else {
-    // const date = new Date().toLocaleDateString("en-US");
+  } else {    
     const date = new Date().toLocaleDateString();
     console.log(date);
     newTransaction.fechaUltimaS = date;
     newTransaction.enLinea = false;
-    newTransaction.imagen =
-      "https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg";
+    newTransaction.imagen = "https://static.vecteezy.com/system/resources/thumbnails/022/014/184/small/user-icon-member-login-isolated-vector.jpg";
     console.log(newTransaction);
     const responseTransaction = await createTransaction(newTransaction);
     transactions.push(responseTransaction.data);
@@ -70,8 +47,7 @@ form.addEventListener("submit", async (e) => {
       title: "Registro exitoso",
       showConfirmButton: false,
       timer: 1500,
-    });
-    // printTransactions(transactionsContainer, transactions);
+    });   
     form.reset();
   }
 });

@@ -25,8 +25,7 @@ export const getUserConversations = async (idUser) => {
   try {
     const started = await axios.get(endpoints.messagesStarted(idUser));
     const received = await axios.get(endpoints.messageReceived(idUser));
-    return [...started.data, ...received.data];
-    // return [...received.data];
+    return [...started.data, ...received.data];    
   } catch (error) {
     console.error(error);
     return [];
@@ -57,13 +56,13 @@ export const getContacts = async (idUserLogged) => {
 export const getAnConversation = async (idUserLogged, idContact) => {
   try {
     const conversacionIniciada = await axios.get(endpoints.getAConversation(idUserLogged, idContact));
-    
+
     if (conversacionIniciada.data.length <= 0) {
       const conversacionRecibida = await axios.get(endpoints.getAConversation(idContact, idUserLogged));
-      return conversacionRecibida.data[0]||null;
+      return conversacionRecibida.data[0] || null;
     }
 
-    return conversacionIniciada.data[0]||null;
+    return conversacionIniciada.data[0] || null;
   } catch (error) {
     console.error(error);
     return null;
@@ -89,7 +88,7 @@ export const startAConversation = async ({ senderUser, receptorUser, message }) 
         },
       ],
     };
-    const response = await axios.post(url, newConversation);    
+    const response = await axios.post(url, newConversation);
     return response;
   } catch (error) {
     console.error(error);
@@ -102,7 +101,7 @@ export const sendMessage = async ({ idConversation, messagesArrays, sender, newM
     const url = endpoints.aConversation(idConversation);
     const mensaje = {
       sendBy: sender,
-      fecha: new Date().toLocaleDateString('es-CO'),
+      fecha: new Date().toLocaleDateString("es-CO"),
       hora: new Date().toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -120,8 +119,6 @@ export const sendMessage = async ({ idConversation, messagesArrays, sender, newM
     return null;
   }
 };
-
-
 
 export const getConversation = async (conversationId) => {
   try {
@@ -146,7 +143,6 @@ export const getConversation = async (conversationId) => {
   }
 };
 
-
 export const getConversationById = async (conversationId) => {
   try {
     const { data } = await axios.get(endpoints.aConversation(conversationId));
@@ -155,4 +151,4 @@ export const getConversationById = async (conversationId) => {
     console.log(error);
     return null;
   }
-}
+};

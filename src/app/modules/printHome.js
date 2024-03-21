@@ -1,4 +1,4 @@
-import { getchats, getContacts } from "../services/userServices";
+import { getContacts } from "../services/userServices";
 
 export const mostrarChat = (container, chatsList, idUserLogged) => {
   container.innerHTML = "";
@@ -12,23 +12,38 @@ export const mostrarChat = (container, chatsList, idUserLogged) => {
         `;
 
     container.appendChild(smsBox);
-    // element.forEach((mensaje) => {
-    //   const smsBox = document.createElement("div");
-    //   smsBox.classList.add("chat-container__sms-box", `chat-container__${remitente}`);
-
-    //   smsBox.innerHTML = `
-    //       <p>${mensaje.mensaje}<br /><span>${mensaje.hora}</span></p>
-    //     `;
-
-    //   container.appendChild(smsBox);
-    // });
   });
+};
+
+export const printHeaderUser = (container, userHeader, idUserLogged) => {
+  container.innerHTML = "";
+
+  const usuario = userHeader.find((user) => user.id === idUserLogged);
+
+  if (usuario) {
+    container.innerHTML = `
+      <div class="img-text">
+        <figure class="header__user-img">
+          <img
+            class="header__dp"
+            src="${usuario.imagen}"
+            alt="imagen perfil"
+          />
+        </figure>
+        <h4>${usuario.nombre}<br /><span>${usuario.enLinea ? "Online" : "Offline"}</span></h4>
+      </div>
+      <div class="header__nav-icons">
+        <li><i class="fa-solid fa-magnifying-glass"></i></li>
+        <li><i class="fa-solid fa-ellipsis-vertical"></i></li>
+      </div>
+    `;
+  }
 };
 
 export const listarContactos = async (idUserLogged, contactsContainer) => {
   try {
     contactsContainer.innerHTML = "";
-    const contactos = await getContacts(idUserLogged);   
+    const contactos = await getContacts(idUserLogged);
 
     contactos.forEach((contacto) => {
       contactsContainer.innerHTML += `
