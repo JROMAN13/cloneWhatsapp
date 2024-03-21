@@ -387,10 +387,14 @@ body {
 
   &__friend-sms {
     justify-content: flex-start;
+    background: #fff;
+    max-width: 40%;
+    border-radius: 10px;
 
-    p {
+    & p {
       background: #fff;
     }
+    
   }
 }
 
