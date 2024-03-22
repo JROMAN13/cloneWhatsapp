@@ -1,4 +1,4 @@
-const URL_BASE = "http://localhost:3000/";
+const URL_BASE = "https://backendwhatsapp-xrer.onrender.com/";
 
 export const endpoints = {
   transactions: `${URL_BASE}usuarios`,
