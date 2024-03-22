@@ -152,3 +152,12 @@ export const getConversationById = async (conversationId) => {
     return null;
   }
 };
+
+export const guardarCambiosContacto = async (contacto) => {
+  try {    
+    await axios.put(endpoints.transaction(contacto));
+    console.log("Cambios guardados exitosamente");
+  } catch (error) {
+    console.log("Error al guardar cambios:", error);
+  }
+}

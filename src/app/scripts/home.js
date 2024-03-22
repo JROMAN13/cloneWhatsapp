@@ -1,5 +1,5 @@
 import "../styles/home.scss";
-import { getAnConversation, startAConversation, sendMessage,getConversationById, getContacts } from "../services/userServices";
+import { getAnConversation, startAConversation, sendMessage,getConversationById, getContacts, guardarCambiosContacto, getATransaction } from "../services/userServices";
 import { listarContactos, mostrarChat, printHeaderUser } from "../modules/printHome";
 
 const idUserLogged = JSON.parse(localStorage.getItem("userId")) || "1";
@@ -59,3 +59,54 @@ inputElement.addEventListener("keydown", async function (event) {
     }
   }
 });
+
+// Actualizar foto del usuario
+const modal = document.getElementById('modal');
+const btnOpenModal = document.querySelector('.header__dp');
+const btnSubmit = document.getElementById('btnSubmit');
+const modalInput = document.getElementById('modalInput');
+const closeModal = document.getElementsByClassName('close')[0];
+
+// Función para abrir el modal
+btnOpenModal.onclick = function() {
+  modal.style.display = "block";
+}
+
+closeModal.onclick = function() {
+  modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+btnSubmit.onclick = async function() {  
+  const nuevoURLImagen = modalInput.value;  
+
+  if (!idUserLogged) {
+    console.log("No se ha detectado un usuario conectado.");
+    return;
+  }
+  
+  try {
+    
+    const usuarioActual = await getATransaction(idUserLogged);    
+    
+    if (!usuarioActual) {
+      console.log("No se encontró el usuario actualmente conectado.");
+      return;
+    }    
+    
+    usuarioActual.imagen = nuevoURLImagen;    
+    
+    await guardarCambiosContacto(usuarioActual);
+    
+    console.log("Cambios guardados exitosamente");
+  } catch (error) {
+    console.log("Error al guardar cambios:", error);
+  }  
+  
+  modal.style.display = "none";
+}
